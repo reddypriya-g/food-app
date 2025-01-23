@@ -1,6 +1,10 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Clock, MapPin, Phone } from "lucide-react";
+import Menu from "./Menu";
+import Cart from "./Cart";
+import { useToast } from "@/hooks/use-toast";
 
 interface Restaurant {
   id: number;
@@ -16,7 +20,18 @@ interface RestaurantListProps {
   station: string;
 }
 
+interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 const RestaurantList = ({ station }: RestaurantListProps) => {
+  const [selectedRestaurant, setSelectedRestaurant] = useState<number | null>(null);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const { toast } = useToast();
+
   // Mock data - replace with actual API call
   const restaurants: Restaurant[] = [
     {
@@ -38,6 +53,34 @@ const RestaurantList = ({ station }: RestaurantListProps) => {
       phone: "+91 98765 43211"
     }
   ];
+
+  const handleAddToCart = (item: any, quantity: number) => {
+    setCartItems(prev => {
+      const existingItem = prev.find(i => i.id === item.id);
+      if (existingItem) {
+        return prev.map(i =>
+          i.id === item.id
+            ? { ...i, quantity: i.quantity + quantity }
+            : i
+        );
+      }
+      return [...prev, { ...item, quantity }];
+    });
+  };
+
+  const handleRemoveFromCart = (itemId: number) => {
+    setCartItems(prev => prev.filter(item => item.id !== itemId));
+  };
+
+  const handlePlaceOrder = () => {
+    // Mock order placement - replace with actual API call
+    toast({
+      title: "Order Placed Successfully!",
+      description: "Your order will be delivered to your seat.",
+    });
+    setCartItems([]);
+    setSelectedRestaurant(null);
+  };
 
   return (
     <div className="space-y-4">
@@ -67,12 +110,31 @@ const RestaurantList = ({ station }: RestaurantListProps) => {
                   <Phone className="h-4 w-4" />
                   <span>{restaurant.phone}</span>
                 </div>
-                <Button className="w-full mt-4">View Menu</Button>
+                <Button 
+                  className="w-full mt-4"
+                  onClick={() => setSelectedRestaurant(restaurant.id)}
+                >
+                  View Menu
+                </Button>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
+
+      {selectedRestaurant && (
+        <div className="grid gap-4 md:grid-cols-2">
+          <Menu
+            restaurantId={selectedRestaurant}
+            onAddToCart={handleAddToCart}
+          />
+          <Cart
+            items={cartItems}
+            onRemoveItem={handleRemoveFromCart}
+            onPlaceOrder={handlePlaceOrder}
+          />
+        </div>
+      )}
     </div>
   );
 };
