@@ -31,11 +31,11 @@ const Index = () => {
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <img 
-                src="/placeholder.svg" 
-                alt="Train Food Express Logo" 
-                className="h-10 w-10"
-              />
+              <div className="flex flex-col items-start">
+                <span className="text-xl font-bold text-blue-700">IRCTC</span>
+                <span className="text-sm text-gray-600">e-Catering</span>
+              </div>
+              <div className="h-8 w-px bg-gray-300"></div>
               <h1 className="text-2xl font-bold text-primary">Train Food Express</h1>
             </div>
             <div className="flex items-center space-x-6">
