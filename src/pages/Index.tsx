@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import RestaurantList from "@/components/RestaurantList";
+import { User, List } from "lucide-react";
 
 const Index = () => {
   const [pnr, setPnr] = useState("");
@@ -26,9 +27,28 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-primary">Train Food Express</h1>
+      <nav className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-4">
+              <img 
+                src="/placeholder.svg" 
+                alt="Train Food Express Logo" 
+                className="h-10 w-10"
+              />
+              <h1 className="text-2xl font-bold text-primary">Train Food Express</h1>
+            </div>
+            <div className="flex items-center space-x-6">
+              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary">
+                <List className="h-5 w-5" />
+                <span>Orders</span>
+              </button>
+              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary">
+                <User className="h-5 w-5" />
+                <span>Account</span>
+              </button>
+            </div>
+          </div>
         </div>
       </nav>
       
