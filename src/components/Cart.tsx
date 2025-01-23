@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2 } from "lucide-react";
+import OrderDetailsForm from "./OrderDetailsForm";
 
 interface CartItem {
   id: number;
@@ -16,7 +18,13 @@ interface CartProps {
 }
 
 const Cart = ({ items, onRemoveItem, onPlaceOrder }: CartProps) => {
+  const [showOrderForm, setShowOrderForm] = useState(false);
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleOrderSubmit = (data: any) => {
+    console.log("Order details:", data);
+    onPlaceOrder();
+  };
 
   if (items.length === 0) {
     return (
@@ -57,14 +65,28 @@ const Cart = ({ items, onRemoveItem, onPlaceOrder }: CartProps) => {
             </div>
           </div>
         ))}
-      </CardContent>
-      <CardFooter className="flex justify-between">
-        <div>
-          <p className="text-sm text-gray-600">Total</p>
-          <p className="text-xl font-bold">₹{total}</p>
+
+        <div className="pt-4">
+          <div className="flex justify-between items-center">
+            <p className="text-sm text-gray-600">Total</p>
+            <p className="text-xl font-bold">₹{total}</p>
+          </div>
         </div>
-        <Button onClick={onPlaceOrder}>Place Order</Button>
-      </CardFooter>
+
+        {!showOrderForm ? (
+          <Button 
+            onClick={() => setShowOrderForm(true)} 
+            className="w-full mt-4"
+          >
+            Place Order
+          </Button>
+        ) : (
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold mb-4">Delivery Details</h3>
+            <OrderDetailsForm onSubmit={handleOrderSubmit} />
+          </div>
+        )}
+      </CardContent>
     </Card>
   );
 };
