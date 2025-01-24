@@ -83,19 +83,19 @@ const RestaurantList = ({ station }: RestaurantListProps) => {
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       <h2 className="text-xl font-semibold">
         Restaurants at {station}
       </h2>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2">
         {restaurants.map((restaurant) => (
-          <Card key={restaurant.id} className="hover:shadow-md transition-shadow">
-            <CardHeader>
+          <Card key={restaurant.id} className="hover:shadow-lg transition-shadow duration-300">
+            <CardHeader className="pb-3">
               <CardTitle className="text-lg">{restaurant.name}</CardTitle>
               <p className="text-sm text-gray-600">{restaurant.cuisine}</p>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <Clock className="h-4 w-4" />
                   <span>{restaurant.deliveryTime}</span>
@@ -123,16 +123,20 @@ const RestaurantList = ({ station }: RestaurantListProps) => {
       </div>
 
       {selectedRestaurant && (
-        <div className="grid gap-4 md:grid-cols-2">
-          <Menu
-            restaurantId={selectedRestaurant}
-            onAddToCart={handleAddToCart}
-          />
-          <Cart
-            items={cartItems}
-            onRemoveItem={handleRemoveFromCart}
-            onPlaceOrder={handlePlaceOrder}
-          />
+        <div className="grid gap-8 md:grid-cols-2 mt-8">
+          <div className="md:sticky md:top-24">
+            <Menu
+              restaurantId={selectedRestaurant}
+              onAddToCart={handleAddToCart}
+            />
+          </div>
+          <div className="md:sticky md:top-24">
+            <Cart
+              items={cartItems}
+              onRemoveItem={handleRemoveFromCart}
+              onPlaceOrder={handlePlaceOrder}
+            />
+          </div>
         </div>
       )}
     </div>
