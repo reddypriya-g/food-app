@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import RestaurantList from "@/components/RestaurantList";
 import { User, List } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [pnr, setPnr] = useState("");
@@ -39,14 +40,14 @@ const Index = () => {
               <h1 className="text-2xl font-bold text-primary">Train Food Express</h1>
             </div>
             <div className="flex items-center space-x-6">
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary">
+              <Link to="/orders" className="flex items-center space-x-2 text-gray-600 hover:text-primary">
                 <List className="h-5 w-5" />
                 <span>Orders</span>
-              </button>
-              <button className="flex items-center space-x-2 text-gray-600 hover:text-primary">
+              </Link>
+              <Link to="/account" className="flex items-center space-x-2 text-gray-600 hover:text-primary">
                 <User className="h-5 w-5" />
                 <span>Account</span>
-              </button>
+              </Link>
             </div>
           </div>
         </div>
