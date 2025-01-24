@@ -123,14 +123,14 @@ const RestaurantList = ({ station }: RestaurantListProps) => {
       </div>
 
       {selectedRestaurant && (
-        <div className="grid gap-8 md:grid-cols-2 mt-8">
-          <div className="md:sticky md:top-24">
+        <div className="grid gap-8 lg:grid-cols-2 mt-8">
+          <div className="lg:sticky lg:top-24 h-fit max-h-[calc(100vh-8rem)] overflow-y-auto">
             <Menu
               restaurantId={selectedRestaurant}
               onAddToCart={handleAddToCart}
             />
           </div>
-          <div className="md:sticky md:top-24">
+          <div className="lg:sticky lg:top-24 h-fit">
             <Cart
               items={cartItems}
               onRemoveItem={handleRemoveFromCart}

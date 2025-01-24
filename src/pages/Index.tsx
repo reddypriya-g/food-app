@@ -4,13 +4,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import RestaurantList from "@/components/RestaurantList";
-import { User, List } from "lucide-react";
+import { User, List, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import VendorRegistrationForm from "@/components/VendorRegistrationForm";
 
 const Index = () => {
   const [pnr, setPnr] = useState("");
   const [station, setStation] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { toast } = useToast();
 
   const handlePnrSubmit = async () => {
@@ -37,10 +38,12 @@ const Index = () => {
                 <span className="text-xl font-bold text-blue-700">IRCTC</span>
                 <span className="text-sm text-gray-600">e-Catering</span>
               </div>
-              <div className="h-8 w-px bg-gray-300"></div>
-              <h1 className="text-2xl font-bold text-primary">Train Food Express</h1>
+              <div className="hidden md:block h-8 w-px bg-gray-300"></div>
+              <h1 className="hidden md:block text-2xl font-bold text-primary">Train Food Express</h1>
             </div>
-            <div className="flex items-center space-x-6">
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-6">
               <VendorRegistrationForm />
               <Link to="/orders" className="flex items-center space-x-2 text-gray-600 hover:text-primary">
                 <List className="h-5 w-5" />
@@ -51,12 +54,47 @@ const Index = () => {
                 <span>Account</span>
               </Link>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
           </div>
+
+          {/* Mobile Navigation Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden py-4 space-y-4">
+              <VendorRegistrationForm />
+              <Link 
+                to="/orders" 
+                className="flex items-center space-x-2 text-gray-600 hover:text-primary p-2 rounded-lg hover:bg-gray-100"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <List className="h-5 w-5" />
+                <span>Orders</span>
+              </Link>
+              <Link 
+                to="/account" 
+                className="flex items-center space-x-2 text-gray-600 hover:text-primary p-2 rounded-lg hover:bg-gray-100"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <User className="h-5 w-5" />
+                <span>Account</span>
+              </Link>
+            </div>
+          )}
         </div>
       </nav>
       
       <main className="container mx-auto px-4 py-8">
-        <Card className="max-w-2xl mx-auto">
+        <Card className="max-w-4xl mx-auto">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-center">
               Order Food for Your Journey
